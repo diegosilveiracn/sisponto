@@ -1,0 +1,66 @@
+unit UnitLocFuncionario;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, Grids, DBGrids, ExtCtrls, DBCtrls, DB,
+  Provider, SqlExpr, FMTBcd, DBClient, DBLocal, DBLocalS;
+
+type
+  TFormLocFuncionario = class(TForm)
+    DBGrid1: TDBGrid;
+    ButRetornar: TBitBtn;
+    ButCancelar: TBitBtn;
+    DBNavigator1: TDBNavigator;
+    DataSource1: TDataSource;
+    SQLClientDataSet1: TSQLClientDataSet;
+    SQLQuery1: TSQLQuery;
+    procedure ButCancelarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ButRetornarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FormLocFuncionario: TFormLocFuncionario;
+
+implementation
+
+uses UnitCadFuncionarios, Unitpricipal;
+
+{$R *.dfm}
+
+procedure TFormLocFuncionario.ButCancelarClick(Sender: TObject);
+begin
+    FormLocFuncionario.Close;
+    FormCadFuncionario.Enabled := True;
+    FormCadFuncionario.Show;
+    
+    
+end;
+
+procedure TFormLocFuncionario.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+    Action:=Cafree;
+end;
+
+procedure TFormLocFuncionario.ButRetornarClick(Sender: TObject);
+begin
+   FormCadFuncionario.EditCodigo.text:= SqlClientDataSet1.FieldByName('Codigo').asstring;
+   FormCadFuncionario.EditNome.Text:= SQLClientDataSet1.FieldByName('Nome').AsString;
+   FormCadFuncionario.EditFuncao.Text:= SQLClientDataSet1.FieldByName('Funcao').asstring;
+   FormCadFuncionario.EditNome.Enabled := true;
+   FormCadFuncionario.EditFuncao.Enabled := True;
+   FormCadFuncionario.Enabled := True;
+   FormCadFuncionario.ActionAlterar.Enabled:= True;
+   FormCadFuncionario.ActionExcluir.Enabled:= True;
+   FormCadFuncionario.ActionLocalizar.Enabled:= False;
+   FormLocFuncionario.Close;
+end;
+
+end.
